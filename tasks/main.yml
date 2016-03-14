@@ -1,0 +1,24 @@
+---
+# tasks/main.yml
+# define tasks here
+
+- name: Install packages
+  with_items: "{{ _package_list_ }}"
+  action: "{{ ansible_pkg_mgr }} state=installed name={{ item }}"
+
+- name: Download Java
+  command: "wget -q -O {{ _java_archive_ }} --no-check-certificate --no-cookies --header 'Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie' {{ _download_url_ }} creates={{ _java_archive_ }}"
+
+- name: Unpack archive
+  unarchive: src={{ _java_archive_ }} dest={{ _download_folder_ }} copy=no
+
+- name: Fix ownership
+  file: state=directory path={{ _java_name_ }} owner=root group=root recurse=yes
+
+- name: Make Java available for system
+  command: 'update-alternatives --install "{{_ins_dir_}}" "java" "{{ _java_bin_}}" 2000'
+
+- name: Clean up
+  file: state=absent path={{_java_archive_}}
+
+

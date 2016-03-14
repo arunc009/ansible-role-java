@@ -1,0 +1,16 @@
+---
+# vars/main.yml
+# define vars here
+
+_download_url_: http://download.oracle.com/otn-pub/java/jdk/8u72-b15/jdk-8u72-linux-x64.tar.gz
+_download_folder_: /opt
+_java_name_: "{{_download_folder_}}/jdk1.8.0_72"
+_java_bin_: "{{_java_name_}}/bin/java"
+_java_archive_: "{{_download_folder_}}/jdk-8u72-linux-x64.tar.gz"
+_ins_dir_: /usr/bin/java
+_package_list_:
+    - wget
+
+
+
+
